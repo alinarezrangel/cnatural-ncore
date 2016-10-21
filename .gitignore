@@ -1,0 +1,10 @@
+*.o
+*.a
+*.so
+*.dll
+*.dyn
+*.dynlib
+*.out
+*.ignoreme
+ignomere.*
+*.ignoreme.*
