@@ -32,7 +32,7 @@ int main(void)
 	NCoreString_t resp = NULL, null_term_str = NULL;
 	NCoreSize_t resp_size = 0;
 
-	if(ncore_server_ipc_new(&server, NCORE_IS_CLIENT, NCORE_DEFAULT_SERVER) != 0)
+	if(ncore_server_ipc_new(&server, NCORE_IS_CLIENT, NCORE_DEFAULT_SERVER) < 0)
 	{
 		perror("Error connecting to server");
 		exit(EXIT_FAILURE);
@@ -40,7 +40,7 @@ int main(void)
 
 	printf("Sending the PING TO PONG command...\n");
 
-	if(ncore_server_ipc_send(server, str, strlen(str)) != 0)
+	if(ncore_server_ipc_send(server, str, strlen(str)) < 0)
 	{
 		perror("Error sending the command");
 		ncore_server_ipc_destroy(&server);
@@ -49,7 +49,7 @@ int main(void)
 
 	ncore_server_ipc_wait_for_response(server);
 
-	if(ncore_server_ipc_receive(server, &resp, &resp_size) != 0)
+	if(ncore_server_ipc_receive(server, &resp, &resp_size) < 0)
 	{
 		perror("Error receiving the response");
 		ncore_server_ipc_destroy(&server);
