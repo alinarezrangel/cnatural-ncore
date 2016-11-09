@@ -12,106 +12,86 @@
 
 #include <stdio.h>
 #include <stdlib.h>
-#include <stdbool.h>
+#include <string.h>
 
-#include <ipcapi.h>
+#include "ipcapi.h"
 
 int main(int argc, char** argv)
 {
-	bool isServer = false;
-	NCoreServerIPC_t* server = NULL;
-	NCoreServerIPC_t* conn = NULL;
-	char buffer[256];
-	int ret = 0;
+	NCoreBool_t isServer = FALSE;
+	NCoreIPCConnection_t* connection = NULL;
+	char buffer[20];
 
-	if(argc <= 1)
-	{
-		fprintf(stderr, "Error in ncore executable: one argument is required\n");
-		fprintf(stderr, "Usage:\n");
-		fprintf(stderr, "    ncore (server|client)\n");
-		fprintf(stderr, "E_NOARG: Error No Arguments\n");
-		exit(EXIT_FAILURE);
-	}
+	memset(buffer, '\0', 19);
 
 	isServer = !strcmp("server", argv[1]);
 
+	NCORE_TRY(ncore_ipc_connection_new(&connection))
+	{
+		fprintf(stderr, "Error creating the connection: %d\n", ncore_errno);
+		exit(EXIT_FAILURE);
+	}
+
 	if(isServer)
 	{
-		printf("Starting as server...\n");
-
-		if(ncore_server_ipc_new(&server, NCORE_IS_SERVER, NCORE_DEFAULT_SERVER) < 0)
+		NCORE_TRY(ncore_ipc_connection_create(connection, "./example.pipe.fifo"))
 		{
-			perror("Error connecting");
+			fprintf(stderr, "Error opening the rsc: %d\n", ncore_errno);
+
+			NCORE_TRY(ncore_ipc_connection_destroy(&connection))
+			{
+				fprintf(stderr, "Error destroying the connection: %d\n", ncore_errno);
+			}
 			exit(EXIT_FAILURE);
 		}
 
-		while(ncore_server_ipc_accept(server, &conn) >= 0)
+		printf("Enter anything to start to send the data\n");
+		scanf("%s", buffer);
+
+		NCORE_TRY(ncore_ipc_connection_send_fix(connection, "Hola    ", 4))
 		{
-			do
-			{
-				ncore_server_ipc_wait_for_response(conn);
-
-				if(ncore_server_ipc_receive_fix(conn, buffer, 255) >= 0)
-				{
-					perror("Error receiving the data");
-					ncore_server_ipc_destroy(&conn);
-					ncore_server_ipc_destroy(&server);
-					exit(EXIT_FAILURE);
-				}
-
-				printf("R:%s\n", buffer);
-
-				/* Echoed */
-
-				if(ncore_server_ipc_send(conn, buffer, 255) < 0)
-				{
-					perror("Error echoing the data");
-					ncore_server_ipc_destroy(&conn);
-					ncore_server_ipc_destroy(&server);
-					exit(EXIT_FAILURE);
-				}
-			} while(strcmp(".", buffer) != 0);
-
-			ncore_server_ipc_destroy(&conn);
+			fprintf(stderr, "Error sending the data: %d\n", ncore_errno);
 		}
 
-		ncore_server_ipc_destroy(&server);
+		printf("Data sended, waiting...\n");
+		scanf("%s", buffer);
 	}
 	else
 	{
-		printf("Starting as server...\n");
-
-		if(ncore_server_ipc_new(&server, NCORE_IS_CLIENT, NCORE_DEFAULT_SERVER) < 0)
+		NCORE_TRY(ncore_ipc_connection_open(connection, "./example.pipe.fifo"))
 		{
-			perror("Error connecting");
+			fprintf(stderr, "Error opening the rsc: %d\n", ncore_errno);
+
+			NCORE_TRY(ncore_ipc_connection_destroy(&connection))
+			{
+				fprintf(stderr, "Error destroying the connection: %d\n", ncore_errno);
+			}
 			exit(EXIT_FAILURE);
 		}
 
-		do
+		printf("Listening...\n");
+		printf("Enter anything to start to receive the data\n");
+		scanf("%s", buffer);
+
+		NCORE_TRY(ncore_ipc_connection_receive_fix(connection, buffer, 4))
 		{
-			memset(buffer, '\0', 255);
-			scanf("%s", buffer);
+			fprintf(stderr, "Error receiving the data: %d\n", ncore_errno);
+		}
 
-			if(ncore_server_ipc_send(server, buffer, 255) < 0)
-			{
-				perror("Error echoing the data");
-				ncore_server_ipc_destroy(&conn);
-				ncore_server_ipc_destroy(&server);
-				exit(EXIT_FAILURE);
-			}
-
-			ncore_server_ipc_wait_for_response(server);
-
-			if(ncore_server_ipc_receive_fix(server, buffer, 255) >= 0)
-			{
-				perror("Error receiving the data");
-				ncore_server_ipc_destroy(&conn);
-				ncore_server_ipc_destroy(&server);
-				exit(EXIT_FAILURE);
-			}
-			printf("R:%s\n", buffer);
-		} while(strcmp(".", buffer) != 0);
-
-		ncore_server_ipc_destroy(&server);
+		printf("Data receiver: %s\nEnding\n", buffer);
 	}
+
+	NCORE_TRY(ncore_ipc_connection_close(connection))
+	{
+		fprintf(stderr, "Error closing the connection: %d\n", ncore_errno);
+		exit(EXIT_FAILURE);
+	}
+
+	NCORE_TRY(ncore_ipc_connection_destroy(&connection))
+	{
+		fprintf(stderr, "Error destroying the connection: %d\n", ncore_errno);
+		exit(EXIT_FAILURE);
+	}
+
+	exit(EXIT_SUCCESS);
 }
