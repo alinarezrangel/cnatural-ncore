@@ -21,54 +21,88 @@ The main named pipes (or busses) are:
 ## C API ##
 
 ```c
-#include "stdio.h"
-#include "stdlib.h"
-#include "naturalserver/ncore/ipcapi.h"
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
 
-int main(void)
+#include "ipcapi.h"
+
+int main(int argc, char** argv)
 {
-	NCoreServerIPC_t* server;
-	NCoreConstString_t str = NCORE_CMD_PING_TO_PONG; // Command #1: PING TO PONG
-	NCoreString_t resp = NULL, null_term_str = NULL;
-	NCoreSize_t resp_size = 0;
+	NCoreBool_t isServer = FALSE;
+	NCoreIPCConnection_t* connection = NULL;
+	char buffer[20];
 
-	if(ncore_server_ipc_new(&server, NCORE_IS_CLIENT, NCORE_DEFAULT_SERVER) < 0)
+	memset(buffer, '\0', 19);
+
+	isServer = !strcmp("server", argv[1]);
+
+	NCORE_TRY(ncore_ipc_connection_new(&connection))
 	{
-		perror("Error connecting to server");
+		fprintf(stderr, "Error creating the connection: %d\n", ncore_errno);
 		exit(EXIT_FAILURE);
 	}
 
-	printf("Sending the PING TO PONG command...\n");
-
-	if(ncore_server_ipc_send(server, str, strlen(str)) < 0)
+	if(isServer)
 	{
-		perror("Error sending the command");
-		ncore_server_ipc_destroy(&server);
+		NCORE_TRY(ncore_ipc_connection_create(connection, "./example.pipe.fifo"))
+		{
+			fprintf(stderr, "Error opening the rsc: %d\n", ncore_errno);
+
+			NCORE_TRY(ncore_ipc_connection_destroy(&connection))
+			{
+				fprintf(stderr, "Error destroying the connection: %d\n", ncore_errno);
+			}
+			exit(EXIT_FAILURE);
+		}
+
+		printf("Enter anything to start to send the data\n");
+		scanf("%s", buffer);
+
+		NCORE_TRY(ncore_ipc_connection_send_fix(connection, "Hola    ", 4))
+		{
+			fprintf(stderr, "Error sending the data: %d\n", ncore_errno);
+		}
+
+		printf("Data sended, waiting...\n");
+		scanf("%s", buffer);
+	}
+	else
+	{
+		NCORE_TRY(ncore_ipc_connection_open(connection, "./example.pipe.fifo"))
+		{
+			fprintf(stderr, "Error opening the rsc: %d\n", ncore_errno);
+
+			NCORE_TRY(ncore_ipc_connection_destroy(&connection))
+			{
+				fprintf(stderr, "Error destroying the connection: %d\n", ncore_errno);
+			}
+			exit(EXIT_FAILURE);
+		}
+
+		printf("Listening...\n");
+		printf("Enter anything to start to receive the data\n");
+		scanf("%s", buffer);
+
+		NCORE_TRY(ncore_ipc_connection_receive_fix(connection, buffer, 4))
+		{
+			fprintf(stderr, "Error receiving the data: %d\n", ncore_errno);
+		}
+
+		printf("Data receiver: %s\nEnding\n", buffer);
+	}
+
+	NCORE_TRY(ncore_ipc_connection_close(connection))
+	{
+		fprintf(stderr, "Error closing the connection: %d\n", ncore_errno);
 		exit(EXIT_FAILURE);
 	}
 
-	ncore_server_ipc_wait_for_response(server);
-
-	if(ncore_server_ipc_receive(server, &resp, &resp_size) < 0)
+	NCORE_TRY(ncore_ipc_connection_destroy(&connection))
 	{
-		perror("Error receiving the response");
-		ncore_server_ipc_destroy(&server);
+		fprintf(stderr, "Error destroying the connection: %d\n", ncore_errno);
 		exit(EXIT_FAILURE);
 	}
-
-	null_term_str = ncore_wrap_string(&resp, &resp_size);
-	if(null_term_str == NULL)
-	{
-		perror("Error allocating the response");
-		ncore_server_ipc_destroy(&server);
-		exit(EXIT_FAILURE);
-	}
-
-	printf("Received %s from the server\n", null_term_str);
-
-	free(null_term_str);
-	free(resp);
-	ncore_server_ipc_destroy(&server);
 
 	exit(EXIT_SUCCESS);
 }
