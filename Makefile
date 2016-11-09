@@ -1,5 +1,6 @@
 
 TARGET=ncore.out
+API=libncore.a
 FILES=ipcapi
 WRAPOS=named_pipes
 MAINF=main.c
@@ -12,14 +13,18 @@ RM=rm
 SRC=src
 WAPS=wrap_os
 HEADS=include
-OBJS=error.o ipcapi.o named_pipes.o main.o
+MAIN=main.o
+OBJS=error.o ipcapi.o named_pipes.o
 CC=gcc
 LD=gcc
 
 all: $(TARGET)
 
-$(TARGET): $(OBJS)
-	$(LD) -o $(TARGET) $(OBJS) $(LDFLAGS) $(LDLIBS)
+$(TARGET): $(API) $(MAIN)
+	$(LD) -o $(TARGET) $(MAIN) $(API) $(LDFLAGS) $(LDLIBS)
+
+$(API): $(OBJS)
+	ar -cvq $(API) $(OBJS)
 
 main.o: $(SRC)/main.c
 	$(CC) -o main.o -c $(SRC)/main.c $(CFLAGS) $(CLIBS)
@@ -34,4 +39,4 @@ ipcapi.o: $(SRC)/ipcapi.c $(HEADS)/ipcapi.h
 	$(CC) -o ipcapi.o -c $(SRC)/ipcapi.c $(CFLAGS) $(CLIBS)
 
 clean:
-	$(RM) $(TARGET) $(OBJS)
+	$(RM) $(TARGET) $(OBJS) $(MAIN) $(API)
