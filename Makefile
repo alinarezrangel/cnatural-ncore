@@ -4,6 +4,7 @@ API=libncore.a
 FILES=ipcapi
 WRAPOS=named_pipes
 MAINF=main.c
+DRIVERS=
 
 CFLAGS=-std=c99 -Iinclude/ -Wall -g
 LDFLAGS=

@@ -1,0 +1,49 @@
+Table of NCore Error codes and messages:
+
+.------------+------------------------------+--------------------------------.
+| Error code | Error constant (in C)        | Error message                  |
++------------+------------------------------+--------------------------------+
+|  0         | NCORE_NO_ERROR               | No error (good)                |
+| -2         | NCORE_ERROR_USENO            | Error code in errno <errno.h>  |
+|  1         | NCORE_ERROR_NOMEM            | No memory for the allocation   |
+|  1         | NCORE_ERROR_BADALLOC         | Equal to NOMEM (1)             |
+|  2         | NCORE_ERROR_BADDEALLOC       | Bad deallocation (free)        |
+|  3         | NCORE_ERROR_TOOMANYREFS      | Too many references            |
+|  4         | NCORE_ERROR_INVARG           | Invalid Argument               |
+|  5         | NCORE_ERROR_ARGTYPE          | Bad argument type              |
+|  6         | NCORE_ERROR_NOMETA           | No have metadata               |
+|  7         | NCORE_ERROR_BADMETA          | Bad metadata                   |
+|  8         | NCORE_ERROR_BADCMD           | Bad command                    |
+|  9         | NCORE_ERROR_NOCMD            | No command                     |
+| 10         | NCORE_ERROR_BADMATH          | Math error                     |
+| 11         | NCORE_ERROR_DIVZERO          | Division by zero               |
+| 12         | NCORE_ERROR_DOMAIN           | Math domain error              |
+| 13         | NCORE_ERROR_VALUE            | Bad internal value             |
+| 14         | NCORE_ERROR_FUNCTN           | Bad function return value      |
+| 15         | NCORE_ERROR_BADFILE          | Bad file descriptor            |
+| 16         | NCORE_ERROR_NOFILE           | No have access to the file     |
+| 17         | NCORE_ERROR_NOACCESS         | No have access                 |
+| 18         | NCORE_ERROR_NOPERMS          | No have the permissions        |
+| 19         | NCORE_ERROR_NOCLIENT         | Not have a client              |
+| 20         | NCORE_ERROR_IMPOSSIBLE       | The action is impossible       |
+| 21         | NCORE_ERROR_BADERR           | Bad error                      |
+| 22         | NCORE_ERROR_VERYSLOW         | The action is very slow        |
+| 23         | NCORE_ERROR_UNTIME           | Undeterminated action time     |
+| 24         | NCORE_ERROR_BADCOMPLEX       | Bad complex number             |
+| 25         | NCORE_ERROR_BADCPLXTIME      | Bad complexity time            |
+| 26         | NCORE_ERROR_BADPIPE          | Bad pipe                       |
+| 27         | NCORE_ERROR_NULL             | Unexpected NULL                |
+| 28         | NCORE_ERROR_BADFCN           | Bad function                   |
+| 29         | NCORE_ERROR_NOBLOCK          | Try to block an async function |
+| 30         | NCORE_ERROR_PARSE            | Parser error                   |
+| 31         | NCORE_ERROR_TOKEN            | Tokenizer error                |
+| 32         | NCORE_ERROR_TOOMANY          | Too many arguments             |
+| 33         | NCORE_ERROR_VERYFEW          | Very few arguments             |
+| 34         | NCORE_ERROR_NOPEN            | The resource is not opened     |
+| 35         | NCORE_ERROR_OPEN             | The resource is opened         |
+| 36         | NCORE_ERROR_READ             | Unable/Fail to read            |
+| 37         | NCORE_ERROR_WRITE            | Unable/Fail to write           |
+| 38         | NCORE_ERROR_IO               | I/O error                      |
+| 39         | NCORE_ERROR_IOBUFF           | I/O buffering error            |
+`------------+------------------------------+--------------------------------´
+

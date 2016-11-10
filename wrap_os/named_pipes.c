@@ -21,7 +21,7 @@ NCoreError_t ncore_os_namedpipe_new(NCoreOSNamedPipe_t** pipe)
 		return NCORE_ERROR_BADALLOC;
 
 	(*pipe)->fd = -1;
-	(*pipe)->isOpen = 0;
+	(*pipe)->isOpen = FALSE;
 
 	return NCORE_NO_ERROR;
 }
@@ -65,7 +65,7 @@ NCoreError_t ncore_os_namedpipe_create(NCoreOSNamedPipe_t* pipe, const char* nam
 	if(pipe->fd < 0)
 		return NCORE_ERROR_USENO;
 
-	pipe->isOpen = 1;
+	pipe->isOpen = TRUE;
 
 	return NCORE_NO_ERROR;
 }
@@ -85,7 +85,7 @@ NCoreError_t ncore_os_namedpipe_open(NCoreOSNamedPipe_t* pipe, const char* name)
 	if(pipe->fd < 0)
 		return NCORE_ERROR_USENO;
 
-	pipe->isOpen = 1;
+	pipe->isOpen = TRUE;
 
 	return NCORE_NO_ERROR;
 }
@@ -105,7 +105,7 @@ NCoreError_t ncore_os_namedpipe_close(NCoreOSNamedPipe_t* pipe)
 	if(rt < 0)
 		return NCORE_ERROR_USENO;
 
-	pipe->isOpen = 0;
+	pipe->isOpen = FALSE;
 
 	return NCORE_NO_ERROR;
 }
@@ -127,7 +127,7 @@ NCoreError_t ncore_os_namedpipe_release(NCoreOSNamedPipe_t* pipe)
 	if(rt < 0)
 		return NCORE_ERROR_USENO;
 
-	pipe->isOpen = 0;
+	pipe->isOpen = FALSE;
 
 	return NCORE_NO_ERROR;
 }
