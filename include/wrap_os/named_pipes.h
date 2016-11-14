@@ -91,7 +91,7 @@ NCoreError_t ncore_os_namedpipe_destroy(NCoreOSNamedPipe_t** pipe);
  * @param name Filename of the new named pipe.
  * @return Error (if any)
 */
-NCoreError_t ncore_os_namedpipe_create(NCoreOSNamedPipe_t* pipe, const char* name);
+NCoreError_t ncore_os_namedpipe_create(NCoreOSNamedPipe_t* pipe, const NCoreString_t name);
 
 /**
  * @brief Open a pipe.
@@ -101,7 +101,7 @@ NCoreError_t ncore_os_namedpipe_create(NCoreOSNamedPipe_t* pipe, const char* nam
  * @param name Filename of the pipe to be opened.
  * @return Error (if any)
 */
-NCoreError_t ncore_os_namedpipe_open(NCoreOSNamedPipe_t* pipe, const char* name);
+NCoreError_t ncore_os_namedpipe_open(NCoreOSNamedPipe_t* pipe, const NCoreString_t name);
 
 /**
  * @brief Closes a pipe
@@ -126,7 +126,7 @@ NCoreError_t ncore_os_namedpipe_release(NCoreOSNamedPipe_t* pipe);
  * @param message Message to send.
  * @return Error (if any)
 */
-NCoreError_t ncore_os_namedpipe_send(NCoreOSNamedPipe_t* pipe, const char* message);
+NCoreError_t ncore_os_namedpipe_send(NCoreOSNamedPipe_t* pipe, const NCoreString_t message);
 
 /**
  * @brief Sends some data (text or binary) to the pipe.
@@ -136,7 +136,7 @@ NCoreError_t ncore_os_namedpipe_send(NCoreOSNamedPipe_t* pipe, const char* messa
  * @param len Size (in bytes) of the data to send.
  * @return Error (if any)
 */
-NCoreError_t ncore_os_namedpipe_send_fix(NCoreOSNamedPipe_t* pipe, const char* message, size_t len);
+NCoreError_t ncore_os_namedpipe_send_fix(NCoreOSNamedPipe_t* pipe, const NCoreString_t message, size_t len);
 
 /**
  * @brief Receives some data from the pipe.
@@ -145,7 +145,7 @@ NCoreError_t ncore_os_namedpipe_send_fix(NCoreOSNamedPipe_t* pipe, const char* m
  * @param message Output buffer to be written.
  * @return Error (if any)
 */
-NCoreError_t ncore_os_namedpipe_receive(NCoreOSNamedPipe_t* pipe, char* message);
+NCoreError_t ncore_os_namedpipe_receive(NCoreOSNamedPipe_t* pipe, NCoreString_t message);
 
 /**
  * @brief Receives some data from the pipe.
@@ -155,6 +155,6 @@ NCoreError_t ncore_os_namedpipe_receive(NCoreOSNamedPipe_t* pipe, char* message)
  * @param len Number of bytes to be readed.
  * @return Error (if any)
 */
-NCoreError_t ncore_os_namedpipe_receive_fix(NCoreOSNamedPipe_t* pipe, char* message, size_t len);
+NCoreError_t ncore_os_namedpipe_receive_fix(NCoreOSNamedPipe_t* pipe, NCoreString_t message, size_t len);
 
 #endif /* ~_NCORE_WRAPOS_NAMED_PIPES_H_ */

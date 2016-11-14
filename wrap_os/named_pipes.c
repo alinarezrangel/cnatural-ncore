@@ -39,7 +39,7 @@ NCoreError_t ncore_os_namedpipe_destroy(NCoreOSNamedPipe_t** pipe)
 	return NCORE_NO_ERROR;
 }
 
-NCoreError_t ncore_os_namedpipe_create(NCoreOSNamedPipe_t* pipe, const char* name)
+NCoreError_t ncore_os_namedpipe_create(NCoreOSNamedPipe_t* pipe, const NCoreString_t name)
 {
 	if(pipe->isOpen)
 		return NCORE_ERROR_OPEN;
@@ -69,7 +69,7 @@ NCoreError_t ncore_os_namedpipe_create(NCoreOSNamedPipe_t* pipe, const char* nam
 
 	return NCORE_NO_ERROR;
 }
-NCoreError_t ncore_os_namedpipe_open(NCoreOSNamedPipe_t* pipe, const char* name)
+NCoreError_t ncore_os_namedpipe_open(NCoreOSNamedPipe_t* pipe, const NCoreString_t name)
 {
 	if(pipe->isOpen)
 		return NCORE_ERROR_OPEN;
@@ -132,7 +132,7 @@ NCoreError_t ncore_os_namedpipe_release(NCoreOSNamedPipe_t* pipe)
 	return NCORE_NO_ERROR;
 }
 
-NCoreError_t ncore_os_namedpipe_send(NCoreOSNamedPipe_t* pipe, const char* message)
+NCoreError_t ncore_os_namedpipe_send(NCoreOSNamedPipe_t* pipe, const NCoreString_t message)
 {
 	int rt = 0;
 
@@ -150,7 +150,7 @@ NCoreError_t ncore_os_namedpipe_send(NCoreOSNamedPipe_t* pipe, const char* messa
 
 	return NCORE_NO_ERROR;
 }
-NCoreError_t ncore_os_namedpipe_send_fix(NCoreOSNamedPipe_t* pipe, const char* message, size_t len)
+NCoreError_t ncore_os_namedpipe_send_fix(NCoreOSNamedPipe_t* pipe, const NCoreString_t message, size_t len)
 {
 	int rt = 0;
 
@@ -168,7 +168,7 @@ NCoreError_t ncore_os_namedpipe_send_fix(NCoreOSNamedPipe_t* pipe, const char* m
 
 	return NCORE_NO_ERROR;
 }
-NCoreError_t ncore_os_namedpipe_receive(NCoreOSNamedPipe_t* pipe, char* message)
+NCoreError_t ncore_os_namedpipe_receive(NCoreOSNamedPipe_t* pipe, NCoreString_t message)
 {
 	int rt = 0;
 
@@ -186,7 +186,7 @@ NCoreError_t ncore_os_namedpipe_receive(NCoreOSNamedPipe_t* pipe, char* message)
 
 	return NCORE_NO_ERROR;
 }
-NCoreError_t ncore_os_namedpipe_receive_fix(NCoreOSNamedPipe_t* pipe, char* message, size_t len)
+NCoreError_t ncore_os_namedpipe_receive_fix(NCoreOSNamedPipe_t* pipe, NCoreString_t message, size_t len)
 {
 	int rt = 0;
 
