@@ -122,6 +122,18 @@ typedef NCoreChar_t* NCoreString_t;
 #if !defined(NCORE_CHR)
 #	define NCORE_CHR(x) ((const NCoreChar_t)(x))
 #endif
+#if !defined(NCORE_RSTR)
+#	define NCORE_RSTR(x) ((const char*)(x))
+#endif
+#if !defined(NCORE_RCHR)
+#	define NCORE_RCHR(x) ((const char)(x))
+#endif
+#if !defined(NCORE_CRSTR)
+#	define NCORE_RSTR(x) ((char*)(x))
+#endif
+#if !defined(NCORE_CRCHR)
+#	define NCORE_RCHR(x) ((char)(x))
+#endif
 
 NCORE_DECLARATION_END
 

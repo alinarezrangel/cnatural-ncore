@@ -25,11 +25,17 @@
 
 #if !defined(NCORE_DYNLIB_EXPORT)
 #	if defined(NCORE_OS_POSIXLIKE)
-#		define NCORE_DYNLIB_EXPORT /* None on POSIX-like systems */
+#		if defined(__cplusplus)
+#			define NCORE_DYNLIB_EXPORT /* None on POSIX-like systems when using C */
+#		else
+#			define NCORE_DYNLIB_EXPORT extern "C" /* when using C++ */
+#		endif
 #	else
 #		error "Unable to determine what system use for declare an exportable dynlib symbol"
 #	endif
 #endif
+
+NCORE_DECLARATION_BEGIN
 
 /**
 * @file dynapi.h
@@ -101,5 +107,7 @@ NCoreError_t ncore_os_dynlib_load(
 * @return Error (if any)
 */
 NCoreError_t ncore_os_dynlib_close(NCoreOSDynLib_t* dynlib);
+
+NCORE_DECLARATION_END
 
 #endif /* ~_NCORE_WRAPOS_DYNLIB_H_ */

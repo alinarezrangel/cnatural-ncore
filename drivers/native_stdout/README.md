@@ -18,7 +18,7 @@ description: |
 author:
   name: Alejandro Linarez Rangel
   team-or-group: NCore Developers Team
-  date: 2016-11-10
+date: 2016-11-10
 license: Imported from NCore
 ```
 

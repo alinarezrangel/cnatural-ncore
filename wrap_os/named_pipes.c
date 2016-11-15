@@ -48,7 +48,7 @@ NCoreError_t ncore_os_namedpipe_create(NCoreOSNamedPipe_t* pipe, const NCoreStri
 	pipe->pipeName = name;
 
 #if defined(NCORE_OS_POSIXLIKE)
-	rt = mkfifo(name, 0666);
+	rt = mkfifo(NCORE_RSTR(name), 0666);
 #else
 #	error "Unable to determine what system use for create a named pipe ncore_os_namedpipe_create"
 #endif
@@ -57,7 +57,7 @@ NCoreError_t ncore_os_namedpipe_create(NCoreOSNamedPipe_t* pipe, const NCoreStri
 		return NCORE_ERROR_USENO;
 
 #if defined(NCORE_OS_POSIXLIKE)
-	pipe->fd = open(name, NCORE_PIPE_OPEN_FLAGS);
+	pipe->fd = open(NCORE_RSTR(name), NCORE_PIPE_OPEN_FLAGS);
 #else
 #	error "Unable to determine what system use for open a fd ncore_os_namedpipe_create"
 #endif
@@ -77,7 +77,7 @@ NCoreError_t ncore_os_namedpipe_open(NCoreOSNamedPipe_t* pipe, const NCoreString
 	pipe->pipeName = name;
 
 #if defined(NCORE_OS_POSIXLIKE)
-	pipe->fd = open(name, NCORE_PIPE_OPEN_FLAGS);
+	pipe->fd = open(NCORE_RSTR(name), NCORE_PIPE_OPEN_FLAGS);
 #else
 #	error "Unable to determine what system use for open a fd ncore_os_namedpipe_open"
 #endif
@@ -119,7 +119,7 @@ NCoreError_t ncore_os_namedpipe_release(NCoreOSNamedPipe_t* pipe)
 
 #if defined(NCORE_OS_POSIXLIKE)
 	rt = close(pipe->fd);
-	unlink(pipe->pipeName);
+	unlink(NCORE_RSTR(pipe->pipeName));
 #else
 #	error "Unable to determine what system use for close a fd ncore_os_namedpipe_close"
 #endif
@@ -140,7 +140,7 @@ NCoreError_t ncore_os_namedpipe_send(NCoreOSNamedPipe_t* pipe, const NCoreString
 		return NCORE_ERROR_NOPEN;
 
 #if defined(NCORE_OS_POSIXLIKE)
-	rt = write(pipe->fd, message, strlen(message));
+	rt = write(pipe->fd, NCORE_RSTR(message), strlen(NCORE_RSTR(message)));
 #else
 #	error "Unable to determine what system use for write a fd ncore_os_namedpipe_send"
 #endif
@@ -158,7 +158,7 @@ NCoreError_t ncore_os_namedpipe_send_fix(NCoreOSNamedPipe_t* pipe, const NCoreSt
 		return NCORE_ERROR_NOPEN;
 
 #if defined(NCORE_OS_POSIXLIKE)
-	rt = write(pipe->fd, message, len);
+	rt = write(pipe->fd, NCORE_RSTR(message), len);
 #else
 #	error "Unable to determine what system use for write a fd ncore_os_namedpipe_send_fix"
 #endif
@@ -176,7 +176,7 @@ NCoreError_t ncore_os_namedpipe_receive(NCoreOSNamedPipe_t* pipe, NCoreString_t 
 		return NCORE_ERROR_NOPEN;
 
 #if defined(NCORE_OS_POSIXLIKE)
-	rt = read(pipe->fd, message, NCORE_IOFCN_READ_BLOCK_SIZE);
+	rt = read(pipe->fd, NCORE_RSTR(message), NCORE_IOFCN_READ_BLOCK_SIZE);
 #else
 #	error "Unable to determine what system use for read a fd ncore_os_namedpipe_receive"
 #endif
@@ -194,7 +194,7 @@ NCoreError_t ncore_os_namedpipe_receive_fix(NCoreOSNamedPipe_t* pipe, NCoreStrin
 		return NCORE_ERROR_NOPEN;
 
 #if defined(NCORE_OS_POSIXLIKE)
-	rt = read(pipe->fd, message, len);
+	rt = read(pipe->fd, NCORE_RSTR(message), len);
 #else
 #	error "Unable to determine what system use for write a fd ncore_os_namedpipe_receive_fix"
 #endif

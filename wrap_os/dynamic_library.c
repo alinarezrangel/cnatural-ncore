@@ -40,7 +40,7 @@ NCoreError_t ncore_os_dynlib_open(
 		return NCORE_ERROR_OPEN;
 
 #if defined(NCORE_OS_POSIXLIKE)
-	dynlib->handler = dlopen(libname, RTLD_LAZY);
+	dynlib->handler = dlopen(NCORE_RSTR(libname), RTLD_LAZY);
 #else
 #	error "Unable to determine what system use for open a dynamic library ncore_os_dynlib_open"
 #endif
@@ -69,7 +69,7 @@ NCoreError_t ncore_os_dynlib_load(
 
 #if defined(NCORE_OS_POSIXLIKE)
 	dlerror();
-	fcn = dlsym(dynlib->handler, symbol);
+	fcn = dlsym(dynlib->handler, NCORE_RSTR(symbol));
 	dl_msg = dlerror();
 	rt = dl_msg == NULL;
 #else

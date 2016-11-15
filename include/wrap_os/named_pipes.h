@@ -58,7 +58,7 @@ struct NCoreOSNamedPipe
 #	error "Required named pipes for NCoreOSNamedPipe"
 #endif
 
-	const char* pipeName;
+	const NCoreString_t pipeName;
 	NCoreBool_t isOpen;
 };
 typedef struct NCoreOSNamedPipe NCoreOSNamedPipe_t;
