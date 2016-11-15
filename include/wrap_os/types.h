@@ -18,7 +18,24 @@
 #	include <stdbool.h>
 #endif
 
+#if !defined(NCORE_DECLARATION_BEGIN)
+#	if defined(__cplusplus)
+#		define NCORE_DECLARATION_BEGIN extern "C" {
+#	else
+#		define NCORE_DECLARATION_BEGIN
+#	endif
+#endif
+#if !defined(NCORE_DECLARATION_END)
+#	if defined(__cplusplus)
+#		define NCORE_DECLARATION_END }
+#	else
+#		define NCORE_DECLARATION_END
+#	endif
+#endif
+
 #include "wrap_os/ostype.h"
+
+NCORE_DECLARATION_BEGIN
 
 /* = First: Fileno type = */
 /*
@@ -98,5 +115,14 @@ typedef NCoreChar_t* NCoreString_t;
 #if !defined(NCORE_FAST_CMP)
 #	define NCORE_FAST_CMP(x,y) !(x ^ y)
 #endif
+
+#if !defined(NCORE_STR)
+#	define NCORE_STR(x) ((const NCoreString_t)(x))
+#endif
+#if !defined(NCORE_CHR)
+#	define NCORE_CHR(x) ((const NCoreChar_t)(x))
+#endif
+
+NCORE_DECLARATION_END
 
 #endif /* ~_NCORE_WRAPOS_TYPES_H_ */

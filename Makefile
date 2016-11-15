@@ -15,7 +15,7 @@ SRC=src
 WAPS=wrap_os
 HEADS=include
 MAIN=main.o
-OBJS=error.o ipcapi.o named_pipes.o
+OBJS=error.o ipcapi.o named_pipes.o dynapi.o
 CC=gcc
 LD=gcc
 
@@ -35,6 +35,9 @@ error.o: $(WAPS)/error.c $(HEADS)/error.h
 
 named_pipes.o: $(WAPS)/named_pipes.c $(HEADS)/$(WAPS)/named_pipes.h
 	$(CC) -o named_pipes.o -c $(WAPS)/named_pipes.c $(CFLAGS) $(CLIBS)
+
+dynapi.o: $(WAPS)/dynapi.c $(HEADS)/$(WAPS)/dynapi.h
+	$(CC) -o dynapi.o -c $(WAPS)/dynapi.c $(CFLAGS) $(CLIBS)
 
 ipcapi.o: $(SRC)/ipcapi.c $(HEADS)/ipcapi.h
 	$(CC) -o ipcapi.o -c $(SRC)/ipcapi.c $(CFLAGS) $(CLIBS)

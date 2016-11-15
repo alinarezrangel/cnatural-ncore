@@ -20,9 +20,9 @@ int main(int argc, char** argv)
 {
 	NCoreBool_t isServer = FALSE;
 	NCoreIPCConnection_t* connection = NULL;
-	char buffer[20];
+	NCoreChar_t buffer[20];
 
-	memset(buffer, '\0', 19);
+	memset(buffer, '\0', sizeof(NCoreChar_t) * 19);
 
 	isServer = !strcmp("server", argv[1]);
 
@@ -34,7 +34,7 @@ int main(int argc, char** argv)
 
 	if(isServer)
 	{
-		NCORE_TRY(ncore_ipc_connection_create(connection, "./example.pipe.fifo"))
+		NCORE_TRY(ncore_ipc_connection_create(connection, NCORE_STR("./example.pipe.fifo")))
 		{
 			fprintf(stderr, "Error opening the rsc: %d\n", ncore_errno);
 
@@ -48,7 +48,7 @@ int main(int argc, char** argv)
 		printf("Enter anything to start to send the data\n");
 		scanf("%s", buffer);
 
-		NCORE_TRY(ncore_ipc_connection_send_fix(connection, "Hola    ", 4))
+		NCORE_TRY(ncore_ipc_connection_send_fix(connection, NCORE_STR("Hola    "), 4))
 		{
 			fprintf(stderr, "Error sending the data: %d\n", ncore_errno);
 		}
@@ -58,7 +58,7 @@ int main(int argc, char** argv)
 	}
 	else
 	{
-		NCORE_TRY(ncore_ipc_connection_open(connection, "./example.pipe.fifo"))
+		NCORE_TRY(ncore_ipc_connection_open(connection, NCORE_STR("./example.pipe.fifo")))
 		{
 			fprintf(stderr, "Error opening the rsc: %d\n", ncore_errno);
 

@@ -11,7 +11,11 @@
 
 #include "wrap_os/types.h"
 
+NCORE_DECLARATION_BEGIN
+
 extern NCoreError_t ncore_errno;
+
+NCORE_DECLARATION_END
 
 #define NCORE_NO_ERROR          0   /* No Error (good exit) */
 #define NCORE_ERROR_USENO      -2   /* Use ERRNO instead */

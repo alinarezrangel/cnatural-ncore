@@ -55,7 +55,7 @@
 #	if defined(_WIN64)
 #		define NCORE_OS_WIN64 1
 #		define NCORE_OS "Windows 64-bits"
-#	elif
+#	else
 #		define NCORE_OS_WIN32 1
 #		define NCORE_OS "Windows 32-bits"
 #	endif
@@ -114,7 +114,7 @@
 #	define NCORE_OS "Nucleus"
 #else
 #	error "Undetected OS, please define NCORE_OS to an string indicating the OS\
-name and define NCORE_OS_POSIX if is POSIX-like"
+name and define NCORE_OS_POSIXLIKE if is POSIX-like"
 #endif
 
 #endif /* ~_NCORE_WRAPOS_OSTYPE_H_ */

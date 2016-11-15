@@ -39,6 +39,8 @@
 #	define NCORE_IOFCN_READ_BLOCK_SIZE 255
 #endif
 
+NCORE_DECLARATION_BEGIN
+
 /**
  * @file named_pipes.h
  * Adds a wrapper for the system named pipes
@@ -156,5 +158,7 @@ NCoreError_t ncore_os_namedpipe_receive(NCoreOSNamedPipe_t* pipe, NCoreString_t 
  * @return Error (if any)
 */
 NCoreError_t ncore_os_namedpipe_receive_fix(NCoreOSNamedPipe_t* pipe, NCoreString_t message, size_t len);
+
+NCORE_DECLARATION_END
 
 #endif /* ~_NCORE_WRAPOS_NAMED_PIPES_H_ */

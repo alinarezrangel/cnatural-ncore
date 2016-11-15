@@ -23,6 +23,19 @@
 #	error "Unable to determine what system use for dynamic library load"
 #endif
 
+#if !defined(NCORE_DYNLIB_EXPORT)
+#	if defined(NCORE_OS_POSIXLIKE)
+#		define NCORE_DYNLIB_EXPORT /* None on POSIX-like systems */
+#	else
+#		error "Unable to determine what system use for declare an exportable dynlib symbol"
+#	endif
+#endif
+
+/**
+* @file dynapi.h
+* Dynamic Library API (wraping the OS)
+*/
+
 struct NCoreOSDynLib
 {
 #if defined(NCORE_DYNLIB)
@@ -41,7 +54,7 @@ typedef struct NCoreOSDynLib NCoreOSDynLib_t;
 * @param dynlib Dynamic Library Handler to create
 * @return Error (if any)
 */
-NCoreError_t ncore_os_dynlib_new(NCoreOSDynLib_t* dynlib);
+NCoreError_t ncore_os_dynlib_new(NCoreOSDynLib_t** dynlib);
 
 /**
 * @brief Destroys a dynamic library handler.
@@ -49,7 +62,7 @@ NCoreError_t ncore_os_dynlib_new(NCoreOSDynLib_t* dynlib);
 * @param dynlib Dynamic Library Handler to close
 * @return Error (if any)
 */
-NCoreError_t ncore_os_dynlib_destroy(NCoreOSDynLib_t* dynlib);
+NCoreError_t ncore_os_dynlib_destroy(NCoreOSDynLib_t** dynlib);
 
 /**
 * @brief Opens a new dynlib and associates it with a handler.

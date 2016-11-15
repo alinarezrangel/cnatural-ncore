@@ -30,6 +30,8 @@
 */
 #define NCORE_IPC_VERSION 2016001UL
 
+NCORE_DECLARATION_BEGIN
+
 typedef unsigned int NCoreIPCConnectionID_t;
 typedef unsigned long int NCoreIPCConnectionVersion_t;
 
@@ -75,7 +77,7 @@ NCoreError_t ncore_ipc_connection_destroy(
 */
 NCoreError_t ncore_ipc_connection_open(
 	NCoreIPCConnection_t* connection,
-	const char* pipename
+	const NCoreString_t pipename
 );
 
 /**
@@ -87,7 +89,7 @@ NCoreError_t ncore_ipc_connection_open(
 */
 NCoreError_t ncore_ipc_connection_create(
 	NCoreIPCConnection_t* connection,
-	const char* pipename
+	const NCoreString_t pipename
 );
 
 /**
@@ -105,7 +107,7 @@ NCoreError_t ncore_ipc_connection_close(NCoreIPCConnection_t* connection);
 */
 NCoreError_t ncore_ipc_connection_receive(
 	NCoreIPCConnection_t* connection,
-	char* buffer
+	NCoreString_t buffer
 );
 
 /**
@@ -117,7 +119,7 @@ NCoreError_t ncore_ipc_connection_receive(
 */
 NCoreError_t ncore_ipc_connection_receive_fix(
 	NCoreIPCConnection_t* connection,
-	char* buffer,
+	NCoreString_t buffer,
 	size_t bflen
 );
 
@@ -129,7 +131,7 @@ NCoreError_t ncore_ipc_connection_receive_fix(
 */
 NCoreError_t ncore_ipc_connection_send(
 	NCoreIPCConnection_t* connection,
-	char* buffer
+	NCoreString_t buffer
 );
 
 /**
@@ -141,8 +143,10 @@ NCoreError_t ncore_ipc_connection_send(
 */
 NCoreError_t ncore_ipc_connection_send_fix(
 	NCoreIPCConnection_t* connection,
-	char* buffer,
+	NCoreString_t buffer,
 	size_t bflen
 );
+
+NCORE_DECLARATION_END
 
 #endif /* ~_NCORE_IPCAPI_H__ */
