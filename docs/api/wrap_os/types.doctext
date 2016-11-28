@@ -1,0 +1,158 @@
+==============================================================================
+=                             NCore Documentation                            =
+==============================================================================
+
+==                     wrap_os/types.h: Common Types                        ==
+
+  This file declares general purpose macros, types and constants for it use
+outside of the `wrap_os/` section.
+
+===                        Macros (14, can be more)                        ===
+
+====                  NCORE_NOT_USE_BOOL: Can bool be used?               ====
+
+  If this macro it's defined ^before^ including this header, the `<stdbool.h>`
+C header will not be included and `NCoreBool_t` will be defined as
+`unsigned char` instead of `bool`.
+
+====                       NCORE_DECLARATION_BEGIN                        ====
+
+  This macro should be used ^before the first line of code^ of all exported
+files. Imports, includes, comments and macro declarations does not count as
+code. This macro expands, generally, to `extern "C" {` in C++. It should be
+^only used^ in header files, and no semi-colon it's required after the macro.
+
+====                         NCORE_DECLARATION_END                        ====
+
+  This macro should be used ^after the last line of code^, at the ending of
+the exported file. Imports, includes, comments and macro declarations does not
+count as code. This macro expands, generally, to `}` in C++. It should be
+^only used^ in header files, and no semi-colon it's required after the macro.
+
+====                             NCORE_FILENO                             ====
+
+  If this macro it's defined, the type `NCoreFileno_t` is an integer that can
+hold any value returned by system file manager calls. This is only defined on
+POSIX-like systems, because they uses integers as file numbers. Generally,
+it's a simple `int`.
+
+  For example:
+
+@ #include <ncore/wrap_os/types.h>
+@
+@ #if defined(NCORE_FILENO)
+@ # define MY_TYPE NCoreFileno_t
+@ #endif
+@
+@ MY_TYPE file = open("filepath", ...);
+
+====                             NCORE_DYNLIB                             ====
+
+  If this macro it's defined, the type `NCoreDynLibHandler_t` is an opaque
+type that can represent a dynamic load library handler.
+
+====                            NCORE_FCN_TYPE                            ====
+
+  If this macro it's defined, the type `NCoreFunctionType_t` is an opaque type
+that can represent ^any^ function pointer with a cast.
+
+====                            TRUE and FALSE                            ====
+
+  This header defined the macros `TRUE` and `FALSE` if they are not defined,
+the value used are `0` and `1` if `NCORE_NOT_USE_BOOL` is defined or `false`
+and `true` otherwise.
+
+====                       NCORE_FAST_CMP: Fast compare                   ====
+
+@ NCORE_FAST_CMP(x, y) !((x) ^ (y))
+
+  Compares the two integer values using XOR instead of a new branch (`==`).
+
+====                       NCORE_STR: Cast a raw string                   ====
+
+@ NCORE_STR(x) ((const NCoreString_t)(x))
+
+  Casts a raw C string (`const char*`) `x` to a `const NCoreString_t`.
+
+====                       NCORE_CHR: Cast a raw char                     ====
+
+@ NCORE_CHR(x) ((const NCoreChar_t)(x))
+
+  Casts a raw C char (`const char`) `x` to a `const NCoreChar_t`.
+
+====                     NCORE_RSTR: Reverse string cast                  ====
+
+@ NCORE_RSTR(x) ((const char*)(x))
+
+  Casts a `const NCoreString_t` to a raw C string (`const char*`).
+
+====                     NCORE_RCHR: Reverse char cast                    ====
+
+@ NCORE_RCHR(x) ((const char)(x))
+
+  Casts a `const NCoreChar_t` to a raw C char (`const char`).
+
+====                 NCORE_CRSTR: Non-const reverse string cast           ====
+
+@ NCORE_CRSTR(x) ((char*)(x))
+
+  Casts a `NCoreString_t` (non const) to a mutable raw C string (`char*`).
+
+====                  NCORE_CRCHR: Nono-const reverse char cast           ====
+
+@ NCORE_CRCHR(x) ((char)(x))
+
+  Casts a `NCoreChar_t` (non const) to a mutable raw C char (`char`).
+
+===                         Types (8, can be less)                         ===
+
+====                 NCoreFileno_t (requires NCORE_FILENO)                ====
+
+  Represents a file number (like a file handler, but is an integer).
+
+====                             NCoreFile_t                              ====
+
+  Represents a universal file handler, generally, it's a typedef of `FILE*`
+(see `<stdio.h>` of C99 standard).
+
+====                              NCoreBool_t                             ====
+
+  It's a type that can hold, at least, two values (the macros `TRUE` and
+`FALSE`). The semantic operations and casts are not defined:
+
+@ // all of these are a undefined behiavour:
+@ NCoreBool_t a;
+@ a = 4;
+@ a = -2;
+@ a = 0.3;
+@ a = 5 + 7 * I;
+@ a = "hello";
+@ a = 'h';
+@ a = this_function_returns_an_int();
+@ // These should work propertly:
+@ a = TRUE;
+@ a = 0; // 0 == FALSE
+@ a = 1; // 1 == TRUE
+@ a = true; // if <stdbool.h> is included: TRUE == true
+
+====                           NCoreDynLibHandler_t                       ====
+
+  This type represents an opaque type that can represent a handler to a
+dynamic load library.
+
+====                            NCoreFunctionType_t                       ====
+
+  This type can be converted from and to ^any^ function pointer type.
+
+====                              NCoreError_t                            ====
+
+  This type can hold any error code (see the `ncore/error.h` header).
+
+====                               NCoreChar_t                            ====
+
+  This type represents a char. There is not specification about it's size
+or encoding.
+
+====                              NCoreString_t                           ====
+
+  This type represents a string. It's an alias of `NCoreChar_t*`.

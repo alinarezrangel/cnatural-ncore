@@ -112,4 +112,3 @@ value.
 @ destroy_memory(a);
 @ // a and it's memory are destroyed:
 @ // old it's destroyed too because it shares the memory location with a
-

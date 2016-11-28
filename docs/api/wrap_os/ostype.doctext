@@ -11,4 +11,71 @@ macros that enables the detection of the OS name and it's type.
 
 ====                           NCORE_OS: OS Name                          ====
 
-The `NCORE_OS` macro contains a raw string literal with a non-formal
+  The `NCORE_OS` macro contains a raw string literal with a non-formal name of
+the OS used when NCore was compiled.
+
+  For example:
+
+ * `Android` means any of the Android OS family
+ * `FreeBSD` means the FreeBSD OS
+ * `GNU/Hurd based` means all GNU/Hurd based OS
+
+  This macro does not provide you form to access to more information, and the
+names holded in this macro are purely informative (they can be wrong). There
+is not warranty that this macro holds the ^current^ operating system.
+
+====                           NCORE_OS_POSIXLIKE                         ====
+
+  If this macro it's defined, the current OS is a POSIX-like system. There is
+not warranty of that this system is POSIX-complete.
+
+====                              NCORE_OS_WIN                            ====
+
+  If this macro it's defined, the current OS is any of the family of the
+Microsoft Windows Operating System.
+
+====                              NCORE_OS_APPLE                          ====
+
+  If this macro it's defined, the current OS is any of the Apple family.
+
+====                                 Others                               ====
+
+  This is is of the form: `MACRO`: OS
+
+ * `NCORE_OS_AIX`: AIX
+ * `NCORE_OS_ANDROID`: Android (or CyanogenMod)
+ * `NCORE_OS_AMIGAOS`: AmigaOS
+ * `NCORE_OS_BEOS`: BeOS
+ * `NCORE_OS_BLUEGENE`: BlueGene
+ * `NCORE_OS_BSD`: Any of the BSD family
+ * `NCORE_OS_FREEBSD`: FreeBSD
+ * `NCORE_OS_OPENBSD`: OpenBSD
+ * `NCORE_OS_NETBSD`: NetBSD
+ * `NCORE_OS_BSDI` or `NCORE_OS_BSDOS`: BSD/OS
+ * `NCORE_OS_DRAGONFLY`: DragonFly
+ * `NCORE_OS_CYGWIN`: CygWin (see [1])
+ * `NCORE_OS_WIN`: Microsoft Windows
+ * `NCORE_OS_WIN32`: Microsoft Windows 32bits
+ * `NCORE_OS_WIN64`: Microsoft Windows 64bits
+ * `NCORE_OS_LINUX`: GNU/Linux based
+ * `NCORE_OS_HURD`: GNU/Hurd based
+ * `NCORE_OS_KFREEBSD`: GNU/kFreeBSD based
+ * `NCORE_OS_HPUX`: HP-UX
+ * `NCORE_OS_OS400`: OS400
+ * `NCORE_OS_INTEGRITY`: Integrity
+ * `NCORE_OS_INTERIX`: Interix
+ * `NCORE_OS_LYNX`: Lynx
+ * `NCORE_OS_APPLE`: Any of Apply (Mac OS, Macintosh, IOS)
+ * `NCORE_OS_MICROWAVEOS9`: OS-9
+ * `NCORE_OS_MINIX`: Minix
+ * `NCORE_OS_MORPHOS`: MorphOS
+ * `NCORE_OS_NONSTOP`: NonStop
+ * `NCORE_OS_NUCLEUS`: Nucleus
+
+==                            Notes and references                          ==
+
+[1]: Cygwin it's not a real operating system, but it was selected as one for
+prevent from using POSIX-like APIs on Microsoft Windows-like systems.
+
+  All compiler macros was selected from the SourceForge predefined compiler
+macros at <https://sourceforge.net/p/predef/wiki/Home/>.

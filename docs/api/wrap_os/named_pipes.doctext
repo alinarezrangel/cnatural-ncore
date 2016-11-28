@@ -1,0 +1,10 @@
+==============================================================================
+=                             NCore Documentation                            =
+==============================================================================
+
+==                wrap_os/named_pipes.h: Named Pipes Interface              ==
+
+  This header declares a interface for interact with the OS for create,
+manage and use named pipes.
+
+

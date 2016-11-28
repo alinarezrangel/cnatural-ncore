@@ -113,7 +113,7 @@ typedef char NCoreChar_t;
 typedef NCoreChar_t* NCoreString_t;
 
 #if !defined(NCORE_FAST_CMP)
-#	define NCORE_FAST_CMP(x,y) !(x ^ y)
+#	define NCORE_FAST_CMP(x,y) !((x) ^ (y))
 #endif
 
 #if !defined(NCORE_STR)

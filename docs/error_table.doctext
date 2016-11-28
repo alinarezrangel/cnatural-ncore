@@ -50,4 +50,3 @@
 | 38         | NCORE_ERROR_IO               | I/O error                      |
 | 39         | NCORE_ERROR_IOBUFF           | I/O buffering error            |
 `------------+------------------------------+--------------------------------´
-

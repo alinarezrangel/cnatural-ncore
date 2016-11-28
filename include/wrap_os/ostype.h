@@ -96,7 +96,7 @@
 #	define NCORE_OS_POSIXLIKE 1
 #elif defined(__OS9000) || defined(_OSK)
 #	define NCORE_OS_MICROWAVEOS9 1
-#	define NCORE_OS "Interix"
+#	define NCORE_OS "OS-9"
 #	define NCORE_OS_POSIXLIKE 1
 #elif defined(__minix)
 #	define NCORE_OS_MINIX 1
