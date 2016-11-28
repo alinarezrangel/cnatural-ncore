@@ -63,5 +63,6 @@ NCORE_DECLARATION_END
 #define NCORE_TRY(code) if((ncore_errno = code) != NCORE_NO_ERROR)
 #define NCORE_CATCH(error) if(ncore_errno == error)
 #define NCORE_CATCH_ALL if(TRUE)
+#define NCORE_CATCH_ALL_EXCEPT(error) if(ncore_errno != error)
 
 #endif /* ~_NCORE_ERROR_H_ */

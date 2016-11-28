@@ -37,14 +37,16 @@ typedef unsigned long int NCoreIPCConnectionVersion_t;
 
 /**
 * @brief Is a NCore IPC connection.
+*
+* Is NOT Copyable.
 */
 struct NCoreIPCConnection
 {
-	NCoreOSNamedPipe_t* pipe;
+	NCoreOSNamedPipe_t* pipe; /* !PUBLIC! */
 
-	NCoreBool_t isServer;
-	NCoreIPCConnectionID_t id;
-	NCoreIPCConnectionVersion_t version;
+	NCoreBool_t isServer; /* !PUBLIC! */
+	NCoreIPCConnectionID_t id; /* !PUBLIC! */
+	NCoreIPCConnectionVersion_t version; /* !PUBLIC! */
 };
 typedef struct NCoreIPCConnection NCoreIPCConnection_t;
 

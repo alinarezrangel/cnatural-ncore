@@ -1,0 +1,14 @@
+==============================================================================
+=                             NCore Documentation                            =
+==============================================================================
+
+==                     wrap_os/ostype.h: Detect the OS                      ==
+
+  This header not have a source file (is include-only) and defines a set of
+macros that enables the detection of the OS name and it's type.
+
+===                     Macros (at least 2, can be more)                   ===
+
+====                           NCORE_OS: OS Name                          ====
+
+The `NCORE_OS` macro contains a raw string literal with a non-formal

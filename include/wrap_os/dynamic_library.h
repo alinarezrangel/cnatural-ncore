@@ -42,6 +42,11 @@ NCORE_DECLARATION_BEGIN
 * Dynamic Library API (wraping the OS)
 */
 
+/**
+* @brief It's a OS-dependend dynamic library handler.
+*
+* Is NOT Copyable.
+*/
 struct NCoreOSDynLib
 {
 #if defined(NCORE_DYNLIB)
@@ -50,7 +55,7 @@ struct NCoreOSDynLib
 #	error "Required dynamic libraries handlers for NCoreOSDynLib"
 #endif
 
-	NCoreBool_t isOpen;
+	NCoreBool_t isOpen; /* !PUBLIC! */
 };
 typedef struct NCoreOSDynLib NCoreOSDynLib_t;
 

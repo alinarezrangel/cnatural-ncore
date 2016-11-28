@@ -1,4 +1,8 @@
-Table of NCore Error codes and messages:
+==============================================================================
+=                             NCore Documentation                            =
+==============================================================================
+
+  Table of NCore Error codes and messages:
 
 .------------+------------------------------+--------------------------------.
 | Error code | Error constant (in C)        | Error message                  |

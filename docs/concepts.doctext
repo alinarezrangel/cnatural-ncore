@@ -1,0 +1,115 @@
+==============================================================================
+=                             NCore Documentation                            =
+==============================================================================
+
+==                       NCore Development Concepts                         ==
+
+===                               Copyable                                 ===
+
+  A type `T` it's Copyable if:
+
+ * All members in `T` are Copyable and
+ * With a `T*` named `a` and `b` we can do:
+
+@ // do operations in `b`
+@ a = b;
+
+  And ^all^ operations performed in `a` next to the assigment `a = b` will be
+^equivalent, without any difference^ to do the ^same^ operations on `b`:
+
+@ // These operations are the SAME and the result it's like call
+@ // the same function twice on `a` or `b`
+@ operation
+@ {
+@   do_something(a);
+@   do_something(b);
+@ } == operation
+@ {
+@   do_something(a);
+@   do_something(a);
+@ } == operation
+@ {
+@   do_something(b);
+@   do_something(b);
+@ }
+
+  A Copyable type can be safely used inside a Container.
+
+  All C and C++ native types are Copyable (`int`, `long int`, `float`,
+`complex`, etc) and all simple NCore's types are too (`NCoreBool_t`,
+`NCoreError_t`, etc). Any pointer is Copyable because when `a = b` is
+performed on `T *a, *b` the two pointers points to the same memory and then,
+any operation performed on the **value pointed** of `a` it's equivalent to
+`b`.
+
+  When a Copyable instance `a` it's assigned to a Copyable instance `b`, the
+memory location of `a` ^it's not shared^ with `b`, but instead, the internal
+value of this memory is ^equal but not the same^ to the internal value of `b`.
+
+===                              Shareable                                 ===
+
+  A type `T` is Shareable if:
+
+ * With a `T *a, *b` then:
+
+@ a = b;
+
+  Will set `a` to the same ^memory location^ of `b`:
+
+@ // For example:
+@ a = b;
+@ a = a + 5;
+@ assert a == b
+
+  Because `a` and `b` shares the same memory location, all operations
+performed in `a` will be visible in `b` instantly. These operations are
+visible in `b` inclusive when `b` is accesed on another ^thread^, ^process^
+or ^routine^. This made necessary use a lock or a mutex when it's accesed one
+of these variable from another process:
+
+@ global T *a;
+@ global T *b;
+@ global lock ready;
+@
+@ void t1(void)
+@ {
+@   wait_for(ready);
+@   print(b);
+@ }
+@
+@ void t2(void)
+@ {
+@   a = a + 6;
+@   unlock(ready);
+@ }
+@
+@ void main(void)
+@ {
+@   a = b;
+@   lock(ready);
+@   launch_thread(t1);
+@   launch_thread(t2);
+@   join_thread(t1);
+@   join_thread(t2);
+@ }
+
+  This program will print the `a` values, which is the same that the `b`
+value.
+
+  If `b` it's destroyed or reassigned after the assignation `a = b`, `a` and
+`b` will not share the same memory:
+
+@ a = b; // &a == &b
+@ b = a; // &a == &b
+@ a = 4; // &a != &b
+@ a = c; // &a != &b, &a == &c
+@ b = c; // OR (c = b): &a == &b == &c
+@ destroy(c); // &a == &b, c it's destroyed
+@ a = b;
+@ old = b;
+@ destroy(b); // a holds the old value of b, but b is destroyed
+@ // &a == &old
+@ destroy_memory(a);
+@ // a and it's memory are destroyed:
+@ // old it's destroyed too because it shares the memory location with a
+
