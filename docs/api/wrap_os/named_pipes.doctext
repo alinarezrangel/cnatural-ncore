@@ -7,4 +7,8 @@
   This header declares a interface for interact with the OS for create,
 manage and use named pipes.
 
+===                            Macros (up to 3)                            ===
+
+====                     NCORE_PIPE_OPEN_FLAGS (input)                    ====
+
 
